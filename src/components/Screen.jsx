@@ -15,6 +15,7 @@ export function Screen({
   showMenu = false,
   onMenu,
   flat = false,
+  subHeader = null,
 }) {
   const router = useRouter();
   const session = useSession();
@@ -29,15 +30,13 @@ export function Screen({
   return (
     <div className="relative min-h-dvh bg-[#f9fafc] ">
       <header
-        className={`sticky top-0 z-20 bg-white${flat ? " shadow-none" : " shadow-[0_3px_6px_rgba(16,40,48,0.16)]"}`}
+        className={`sticky top-0 z-40 bg-white${flat ? " shadow-none" : " shadow-[0_3px_6px_rgba(16,40,48,0.16)]"}`}
       >
-        <div className="shrink-0 pt-safe-top" aria-hidden />
+        <div className="safe-top-bar" aria-hidden />
         <div
-          className={`flex items-center gap-2 px-2${headerClassName ?? " min-h-14"}`}
+          className={`flex items-center gap-2${headerClassName ?? " min-h-14 px-2"}`}
         >
-          {hideBack ? (
-            <span className="w-2" />
-          ) : (
+          {hideBack ? null : (
             <button
               type="button"
               onClick={goBack}
@@ -81,6 +80,7 @@ export function Screen({
             </button>
           </div>
         </div>
+        {subHeader}
       </header>
       {children}
       {bottomNav ? (

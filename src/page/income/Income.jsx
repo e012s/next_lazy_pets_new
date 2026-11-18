@@ -364,6 +364,44 @@ function HistoryTab({ filter, onFilterChange }) {
   );
 }
 
+export function IncomeTabBar() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const tab = incomeTabFromPath(pathname);
+  const filter = normalizeHistoryFilter(searchParams.get("filter"));
+
+  function go(nextTab, nextFilter = filter) {
+    const resolvedFilter =
+      nextTab === "history" ? normalizeHistoryFilter(nextFilter) : "all";
+    router.replace(incomeTabPath(nextTab, resolvedFilter), { scroll: false });
+  }
+
+  return (
+    <div
+      className="grid h-[46px] w-full grid-cols-3 bg-[#4d5257] text-[14px]"
+      role="tablist"
+      aria-label="收入分類"
+    >
+      {INCOME_TABS.map((item) => {
+        const active = tab === item.id;
+        return (
+          <button
+            key={item.id}
+            type="button"
+            role="tab"
+            aria-selected={active}
+            onClick={() => go(item.id, item.id === "history" ? filter : "all")}
+            className={`h-full${active ? " font-bold text-white shadow-[inset_0_-3px_0_#28c6ed]" : " font-normal text-[#b9b9b9]"}`}
+          >
+            {item.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function Income() {
   const router = useRouter();
   const pathname = usePathname();
@@ -378,23 +416,6 @@ export default function Income() {
 
   return (
     <div>
-      <div className="grid h-[46px] grid-cols-3 bg-[#4d5257] text-[14px]" role="tablist">
-        {INCOME_TABS.map((item) => {
-          const active = tab === item.id;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              role="tab"
-              aria-selected={active}
-              onClick={() => go(item.id, item.id === "history" ? filter : "all")}
-              className={`h-full ${active ? " font-bold text-white shadow-[inset_0_-3px_0_#28c6ed]" : " font-normal text-[#b9b9b9]"}`}
-            >
-              {item.label}
-            </button>
-          );
-        })}
-      </div>
       {tab === "wallet" ? (
         <WalletTab onOpenWalletHistory={() => go("history", "wallet")} />
       ) : tab === "history" ? (

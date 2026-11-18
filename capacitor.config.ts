@@ -14,7 +14,14 @@ const config: CapacitorConfig = {
     allowMixedContent: true,
   },
   ios: {
-    contentInset: "automatic",
+    contentInset: "never",
+  },
+  plugins: {
+    StatusBar: {
+      style: "DARK",
+      backgroundColor: "#ffffff",
+      overlaysWebView: false,
+    },
   },
   ...(serverUrl
     ? {

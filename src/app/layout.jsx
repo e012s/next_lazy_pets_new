@@ -28,6 +28,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (<html lang="zh-Hant" className={`${noto.variable} h-full antialiased`}>
     <head>
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover"
+      />
       <link
         rel="preload"
         href="/fonts/Framework7Icons-Regular.woff2"

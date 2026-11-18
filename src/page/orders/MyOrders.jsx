@@ -89,12 +89,43 @@ function Section({ icon, label, children }) {
     </div>
   );
 }
+export function MyOrdersTabs() {
+  const { tab, setTab } = useMyOrdersTab();
+  const orders = listMyOrders();
+  const todayCount = orders.filter((item) => item.tab === "today").length;
+
+  return (
+    <div
+      className="grid h-[46px] w-full grid-cols-3 bg-[#4d5257] text-[14px]"
+      role="tablist"
+      aria-label="訂單分類"
+    >
+      {tabs.map((item) => {
+        const active = tab === item.id;
+        const label =
+          item.id === "today" ? `${item.label} · ${todayCount}` : item.label;
+        return (
+          <button
+            key={item.id}
+            type="button"
+            role="tab"
+            aria-selected={active}
+            onClick={() => setTab(item.id)}
+            className={`h-full${active ? " font-bold text-white shadow-[inset_0_-3px_0_#28c6ed]" : " font-normal text-[#b9b9b9]"}`}
+          >
+            {label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function MyOrders() {
   const { tab, setTab, doneMonth, setDoneMonth, doneServiceFilter, setDoneServiceFilter } =
     useMyOrdersTab();
   const { apply: applyService, start: startService } = useOrderServiceLive();
   const orders = listMyOrders();
-  const todayCount = orders.filter((item) => item.tab === "today").length;
   const monthOptions = DONE_MONTH_FILTER_OPTIONS;
 
   useEffect(() => {
@@ -114,16 +145,7 @@ export default function MyOrders() {
           });
     return base.map((item) => applyService(item));
   }, [orders, tab, activeDoneMonth, doneServiceFilter, applyService]);
-  return (<div>
-    <div className="grid h-[46px] grid-cols-3 bg-[#4d5257] text-[14px]" role="tablist">
-      {tabs.map((item) => {
-        const active = tab === item.id;
-        const label = item.id === "today" ? `${item.label} · ${todayCount}` : item.label;
-        return (<button key={item.id} type="button" role="tab" aria-selected={active} onClick={() => setTab(item.id)} className={`h-full ${active ? " font-bold text-white shadow-[inset_0_-3px_0_#28c6ed]" : " font-normal text-[#b9b9b9]"}`}>
-          {label}
-        </button>);
-      })}
-    </div>
+  return (
     <div className="flex flex-col gap-5 px-[15px] pt-5 pb-[30px]">
       <RegisteredData afterRegistered="即可查看訂單。">
         {tab === "done" ? (
@@ -252,5 +274,5 @@ export default function MyOrders() {
         }))}
       </RegisteredData>
     </div>
-  </div>);
+  );
 }

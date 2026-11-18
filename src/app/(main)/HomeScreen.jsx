@@ -226,8 +226,15 @@ export default function HomeScreen() {
     : "暫無";
 
   return (
-    <Screen title="主頁" hideBack bottomNav={<BottomNav active="home" />}>
-      <div className="space-y-5 px-4 pb-8 pt-4">
+    <Screen
+      title="主頁"
+      hideBack
+      flat
+      headerClassName="h-[52px] gap-[6px] px-[15px]"
+      titleClassName="min-w-0 flex-1 truncate text-[16px] font-bold text-[#797979]"
+      bottomNav={<BottomNav active="home" />}
+    >
+      <div className="space-y-5 px-[15px] pb-8 pt-4">
         {needsRegistration ? (
           <>
             <StatusCard

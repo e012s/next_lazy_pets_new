@@ -83,6 +83,13 @@ body {
   letter-spacing: 0;
 }
 
+/* Sticky app header: status-bar gap + solid fill when content scrolls beneath */
+.safe-top-bar {
+  height: var(--safe-area-top);
+  flex-shrink: 0;
+  background-color: var(--color-card, #fff);
+}
+
 @media (pointer: coarse) {
   input,
   select,
