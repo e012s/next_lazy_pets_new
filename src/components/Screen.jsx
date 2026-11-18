@@ -34,7 +34,7 @@ export function Screen({
       >
         <div className="safe-top-bar" aria-hidden />
         <div
-          className={`flex items-center gap-2${headerClassName ?? " min-h-14 px-2"}`}
+          className={`flex items-center gap-2 ${headerClassName ?? " min-h-14 px-2"}`}
         >
           {hideBack ? null : (
             <button
