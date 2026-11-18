@@ -3,6 +3,10 @@
 
 /* Design tokens: change hex here only. Components use Tailwind names from @theme (bg-brand, text-muted, …). */
 :root {
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
   --background: #f9fafc;
   --foreground: #4d5257;
   --brand: #0091b2;
@@ -34,6 +38,8 @@
   --color-brand-outline-active: var(--brand-outline-active);
   --color-chevron: var(--chevron);
   --font-sans: var(--font-noto);
+  --spacing-safe-top: var(--safe-area-top);
+  --spacing-safe-bottom: var(--safe-area-bottom);
   --text-nav: var(--type-nav-size);
   --text-nav--line-height: var(--type-nav-leading);
   --text-nav--letter-spacing: 0;

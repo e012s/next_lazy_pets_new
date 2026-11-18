@@ -29,7 +29,7 @@ export function Screen({
   return (
     <div className="relative min-h-dvh bg-[#f9fafc] ">
       <header
-        className={`sticky top-0 z-20 flex items-center gap-2 bg-white px-2${flat ? " shadow-none" : " shadow-[0_3px_6px_rgba(16,40,48,0.16)]"} ${headerClassName ?? " h-14"}`}
+        className={`sticky top-0 z-20 flex min-h-14 items-center gap-2 bg-white px-2 pt-safe-top${flat ? " shadow-none" : " shadow-[0_3px_6px_rgba(16,40,48,0.16)]"}${headerClassName ? ` ${headerClassName}` : ""}`}
       >
         {hideBack ? (
           <span className="w-2" />
@@ -76,7 +76,12 @@ export function Screen({
         </div>
       </header>
       {children}
-      {bottomNav ? <div aria-hidden className="h-20" /> : null}
+      {bottomNav ? (
+        <div
+          aria-hidden
+          className="h-[calc(5rem+var(--safe-area-bottom))]"
+        />
+      ) : null}
       {bottomNav}
     </div>
   );

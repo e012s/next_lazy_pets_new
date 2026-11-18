@@ -13,7 +13,7 @@ const TABS = [
 export function BottomNav({ active }) {
   return (
     <nav className="fixed inset-x-0 bottom-0 z-30 flex justify-center" aria-label="主選單">
-      <div className="grid w-full max-w-[500px] grid-cols-5 border-t border-[#e8ecef] bg-white pb-[env(safe-area-inset-bottom)] shadow-[0_-3px_6px_rgba(16,40,48,0.06)]">
+      <div className="grid w-full max-w-[500px] grid-cols-5 border-t border-[#e8ecef] bg-white pb-safe-bottom shadow-[0_-3px_6px_rgba(16,40,48,0.06)]">
         {TABS.map((t) => {
           const on = t.id === active;
           return (

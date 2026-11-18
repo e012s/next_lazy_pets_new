@@ -8,6 +8,12 @@ const noto = Noto_Sans_TC({
   subsets: ["latin"],
   display: "swap",
 });
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export const metadata = {
   title: {
     default: "Lazy Pets 專家",
