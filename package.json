@@ -11,7 +11,8 @@
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "start": "next start",
     "lint": "eslint",
-    "sync:f7-icons": "mkdir -p public/fonts && cp node_modules/framework7-icons/fonts/Framework7Icons-Regular.woff2 node_modules/framework7-icons/fonts/Framework7Icons-Regular.woff node_modules/framework7-icons/fonts/Framework7Icons-Regular.ttf public/fonts/"
+    "sync:f7-icons": "mkdir -p public/fonts && cp node_modules/framework7-icons/fonts/Framework7Icons-Regular.woff2 node_modules/framework7-icons/fonts/Framework7Icons-Regular.woff node_modules/framework7-icons/fonts/Framework7Icons-Regular.ttf public/fonts/",
+    "assets:generate": "capacitor-assets generate --assetPath public/assets"
   },
   "dependencies": {
     "@capacitor/app": "^7.1.2",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@capacitor/android": "^7.6.0",
+    "@capacitor/assets": "^4.0.0",
     "@capacitor/cli": "^7.6.0",
     "@capacitor/ios": "^7.6.0",
     "@tailwindcss/turbopack": "^4",

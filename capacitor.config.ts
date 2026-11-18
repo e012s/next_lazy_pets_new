@@ -1,7 +1,8 @@
 import { loadEnvConfig } from "@next/env";
 import type { CapacitorConfig } from "@capacitor/cli";
 
-loadEnvConfig(process.cwd());
+// `cap sync` 不设 NODE_ENV 时也要读到 `.env.local`
+loadEnvConfig(process.cwd(), true);
 
 const serverUrl = process.env.CAPACITOR_SERVER_URL?.trim();
 
