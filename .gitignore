@@ -4,6 +4,8 @@ node_modules/
 # next
 .next/
 out/
+.open-next/
+.wrangler/
 
 # env
 .env

@@ -33,14 +33,36 @@ npm run dev
 
 ## iOS / Android (Capacitor)
 
-This app uses Next **API routes** and cookies, so the native shell loads the running Next server (not a static export).
+Native UI uses Capacitor; pages and `/api` load from **Next** (dev or deployed). Copy `.env.example` → `.env.local` and set `CAPACITOR_SERVER_URL` (LAN IP for device dev, or `https://…` after Cloudflare deploy). `npx cap sync` reads `.env.local` automatically.
 
-1. Copy `.env.example` → `.env.local` and set `CAPACITOR_SERVER_URL` to your machine’s LAN URL (same host the phone can open in Safari), e.g. `http://192.168.x.x:4317`.
-2. Terminal A: `npm run dev`
-3. Terminal B: `npm install` (once), then `npm run cap:sync`
-4. Open Xcode or Android Studio: `npm run cap:open:ios` or `npm run cap:open:android`
+**开发（真机连本机 Next）** — 先开一个终端跑 `npm run dev`，再：
 
-After changing `CAPACITOR_SERVER_URL` or `capacitor.config.ts`, run `npm run cap:sync` again. For store builds without a dev machine, deploy `next start` (or hosted Next) and point `CAPACITOR_SERVER_URL` at that HTTPS origin before sync.
+```bash
+npm run build
+npx cap sync
+npx cap open ios
+# 或
+npx cap open android
+```
+
+**线上（App 连已部署的 Next）** — 把 `.env.local` 里的 `CAPACITOR_SERVER_URL` 改成 HTTPS 域名，再跑上面四条（无需本机 `dev`）。
+
+改过 `CAPACITOR_SERVER_URL` 后务必重新 `npx cap sync`。
+
+## Cloudflare Workers (Next + OpenNext)
+
+仓库已包含 `wrangler.jsonc`（Worker 名 **`next-lazy-pets-new`**，须与 Dashboard 里 Worker 名称一致）。
+
+**Workers → Settings → Builds** 建议：
+
+| 项 | 值 |
+| --- | --- |
+| Build command | `npm run build:cf` |
+| Deploy command | `npx wrangler deploy` |
+
+若部署报 `WORKER_SELF_REFERENCE … lazy-pets-new … not found`，是 `wrangler.jsonc` 里 `services[].service` 与 `name` 不一致；当前已统一为 `next-lazy-pets-new`。改完推 `main` 重新部署。
+
+线上地址写入 `.env.local` 的 `CAPACITOR_SERVER_URL` 后 `npx cap sync`。
 
 Open [http://127.0.0.1:4317/login](http://127.0.0.1:4317/login). A visit to `/` with no session is sent to login. The header menu reaches every screen once the expert is signed in and registered. Pet and repair chips also jump between the two find-task lists.
 

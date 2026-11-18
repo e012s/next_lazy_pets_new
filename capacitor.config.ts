@@ -1,4 +1,7 @@
+import { loadEnvConfig } from "@next/env";
 import type { CapacitorConfig } from "@capacitor/cli";
+
+loadEnvConfig(process.cwd());
 
 const serverUrl = process.env.CAPACITOR_SERVER_URL?.trim();
 

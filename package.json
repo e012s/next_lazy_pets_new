@@ -5,19 +5,17 @@
   "scripts": {
     "dev": "next dev --hostname 0.0.0.0 --port 4317",
     "build": "next build",
+    "build:cf": "opennextjs-cloudflare build",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "start": "next start",
     "lint": "eslint",
-    "sync:f7-icons": "mkdir -p public/fonts && cp node_modules/framework7-icons/fonts/Framework7Icons-Regular.woff2 node_modules/framework7-icons/fonts/Framework7Icons-Regular.woff node_modules/framework7-icons/fonts/Framework7Icons-Regular.ttf public/fonts/",
-    "cap:sync": "cap sync",
-    "cap:copy": "cap copy",
-    "cap:open:ios": "cap open ios",
-    "cap:open:android": "cap open android",
-    "cap:run:ios": "cap run ios",
-    "cap:run:android": "cap run android"
+    "sync:f7-icons": "mkdir -p public/fonts && cp node_modules/framework7-icons/fonts/Framework7Icons-Regular.woff2 node_modules/framework7-icons/fonts/Framework7Icons-Regular.woff node_modules/framework7-icons/fonts/Framework7Icons-Regular.ttf public/fonts/"
   },
   "dependencies": {
     "@capacitor/app": "^7.1.2",
     "@capacitor/core": "^7.6.10",
+    "@opennextjs/cloudflare": "^1.20.17",
     "axios": "^1.21.0",
     "next": "16.4.6",
     "react": "19.3.0",
@@ -37,6 +35,7 @@
     "eslint-config-next": "16.4.6",
     "framework7-icons": "^5.0.5",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.164.0"
   }
 }
