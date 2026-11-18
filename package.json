@@ -6,6 +6,7 @@
     "dev": "next dev --hostname 0.0.0.0 --port 4317",
     "build": "next build",
     "build:cf": "opennextjs-cloudflare build",
+    "cf:ci": "opennextjs-cloudflare build && wrangler deploy",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "start": "next start",

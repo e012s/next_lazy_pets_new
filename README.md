@@ -53,14 +53,16 @@ npx cap open android
 
 仓库已包含 `wrangler.jsonc`（Worker 名 **`next-lazy-pets-new`**，须与 Dashboard 里 Worker 名称一致）。
 
-**Workers → Settings → Builds** 建议：
+**Workers → Settings → Builds**（二选一，不要用 `npm run build` 当 Cloudflare 的 Build command）：
 
-| 项 | 值 |
-| --- | --- |
-| Build command | `npm run build:cf` |
-| Deploy command | `npx wrangler deploy` |
+| 方案 | Build command | Deploy command |
+| --- | --- | --- |
+| A（推荐） | `npm run build:cf` | `npx wrangler deploy` |
+| B（一步） | 留空 / `true` | `npm run cf:ci` |
 
-若部署报 `WORKER_SELF_REFERENCE … lazy-pets-new … not found`，是 `wrangler.jsonc` 里 `services[].service` 与 `name` 不一致；当前已统一为 `next-lazy-pets-new`。改完推 `main` 重新部署。
+`npm run build` 只做 `next build`，不会产生 `.open-next/`。若 Deploy 报 **`Could not find compiled Open Next config`**，把 Build 改成 **`npm run build:cf`**。
+
+Worker 名须与 `wrangler.jsonc` 的 `name` / `WORKER_SELF_REFERENCE.service` 一致（当前：`next-lazy-pets-new`）。
 
 线上地址写入 `.env.local` 的 `CAPACITOR_SERVER_URL` 后 `npx cap sync`。
 
