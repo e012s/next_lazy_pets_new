@@ -1,0 +1,8 @@
+{
+  "apiBaseUrl": "https://workspace.lazy.com.hk/api",
+  "storagePrefix": "lazy_pets",
+  "version": "1.0.0",
+  "cookieSecure": false,
+  "loginUseWorkspaceApi": true,
+  "loadingMinMs": 800
+}

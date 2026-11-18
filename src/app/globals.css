@@ -1,0 +1,294 @@
+@import "tailwindcss";
+@import "../styles/framework7-icons.css";
+
+/* Design tokens: change hex here only. Components use Tailwind names from @theme (bg-brand, text-muted, …). */
+:root {
+  --background: #f9fafc;
+  --foreground: #4d5257;
+  --brand: #0091b2;
+  --chevron: #b0b4b8;
+  --brand-soft: #caeef7;
+  --brand-softer: #ccf5ff;
+  --muted: #797979;
+  --placeholder: #b9b9b9;
+  --alert: #d95959;
+  --card: #ffffff;
+  --line: #e6e9ee;
+  --brand-active: #007a96;
+  --brand-outline-active: #f4fbfd;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-softer: var(--brand-softer);
+  --color-muted: var(--muted);
+  --color-placeholder: var(--placeholder);
+  --color-alert: var(--alert);
+  --color-card: var(--card);
+  --color-line: var(--line);
+  --color-brand-active: var(--brand-active);
+  --color-brand-outline-active: var(--brand-outline-active);
+  --color-chevron: var(--chevron);
+  --font-sans: var(--font-noto);
+  --text-nav: var(--type-nav-size);
+  --text-nav--line-height: var(--type-nav-leading);
+  --text-nav--letter-spacing: 0;
+  --text-title: var(--type-title-size);
+  --text-title--line-height: var(--type-title-leading);
+  --text-title--letter-spacing: 0;
+  --text-body: var(--type-body-size);
+  --text-body--line-height: var(--type-body-leading);
+  --text-body--letter-spacing: 0;
+  --text-caption: var(--type-caption-size);
+  --text-caption--line-height: var(--type-caption-leading);
+  --text-caption--letter-spacing: 0;
+  --text-micro: var(--type-micro-size);
+  --text-micro--line-height: var(--type-micro-leading);
+  --text-micro--letter-spacing: 0;
+  --text-chip: var(--type-chip-size);
+  --text-chip--line-height: var(--type-chip-leading);
+  --text-chip--letter-spacing: 0;
+  --text-field: var(--type-field-size);
+  --text-field--line-height: var(--type-field-leading);
+  --text-field--letter-spacing: 0;
+  --text-amount: var(--type-amount-size);
+  --text-amount--line-height: var(--type-amount-leading);
+  --text-amount--letter-spacing: 0;
+  --text-display: var(--type-display-size);
+  --text-display--line-height: var(--type-display-leading);
+  --text-display--letter-spacing: 0;
+}
+
+/* Stop whole-page rubber-band / scroll chaining (iOS Safari, Chrome) so the
+   fixed bottom nav never gets dragged with the page. */
+html,
+body {
+  overscroll-behavior: none;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-noto), "PingFang TC", "Noto Sans TC", sans-serif;
+  letter-spacing: 0;
+}
+
+@media (pointer: coarse) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+::selection {
+  background: var(--brand-soft);
+  color: #16343c;
+}
+
+@keyframes drawer-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.drawer-panel {
+  animation: drawer-in 220ms ease-out;
+}
+
+@keyframes bottom-sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes bottom-sheet-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.bottom-sheet-panel {
+  animation: bottom-sheet-in 320ms cubic-bezier(0.33, 1, 0.68, 1) both;
+  will-change: transform;
+}
+
+.bottom-sheet-backdrop {
+  animation: bottom-sheet-backdrop-in 280ms ease-out both;
+}
+
+@keyframes lazy-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes lazy-loading-spin-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes lazy-loading-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+.lazy-loading-ring {
+  animation: lazy-loading-spin 1.15s cubic-bezier(0.4, 0.15, 0.25, 1) infinite;
+  will-change: transform;
+}
+
+.lazy-loading-ring-inner {
+  animation: lazy-loading-spin-reverse 1.65s cubic-bezier(0.4, 0.15, 0.25, 1) infinite;
+  will-change: transform;
+}
+
+.lazy-loading-logo {
+  animation: lazy-loading-breathe 2.4s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes lazy-loading-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lazy-loading-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lazy-loading-shell {
+  animation: lazy-loading-fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.lazy-loading-label {
+  animation: lazy-loading-fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+.lazy-loading-backdrop {
+  background-color: rgba(249, 250, 252, 0.42);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  animation: lazy-loading-backdrop-in 0.35s ease-out both;
+}
+
+@keyframes lazy-loader-logo-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.95);
+  }
+}
+
+@keyframes lazy-loader-text-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes lazy-loader-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lazy-loader-card-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.lazy-loader-overlay {
+  background-color: rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  animation: lazy-loader-overlay-in 0.25s ease-out both;
+}
+
+.lazy-loader-card {
+  width: max-content;
+  max-width: min(100%, 280px);
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.lazy-loader-card--enter {
+  animation: lazy-loader-card-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.lazy-loader-logo {
+  animation: lazy-loader-logo-pulse 1s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.lazy-loader-text {
+  animation: lazy-loader-text-pulse 1s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer-panel,
+  .bottom-sheet-panel,
+  .bottom-sheet-backdrop {
+    animation: none;
+  }
+
+  .lazy-loading-ring,
+  .lazy-loading-ring-inner,
+  .lazy-loading-logo,
+  .lazy-loading-shell,
+  .lazy-loading-label,
+  .lazy-loading-backdrop,
+  .lazy-loader-overlay,
+  .lazy-loader-card--enter,
+  .lazy-loader-logo,
+  .lazy-loader-text {
+    animation: none;
+  }
+}

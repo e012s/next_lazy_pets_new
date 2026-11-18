@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+
+# next
+.next/
+out/
+
+# env
+.env
+.env*.local
+
+# OS
+.DS_Store
+
+# Capacitor generated web bundle copies (sources stay in capacitor-web / Next)
+android/app/src/main/assets/public
+ios/App/App/public

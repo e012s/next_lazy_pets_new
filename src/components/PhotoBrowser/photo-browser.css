@@ -1,0 +1,34 @@
+.photo-browser .swiper {
+  --swiper-theme-color: var(--brand, #0091b2);
+  height: 100%;
+  width: 100%;
+}
+
+.photo-browser .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-browser .swiper-zoom-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-browser .swiper-zoom-container > img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  touch-action: pan-x pan-y pinch-zoom;
+}
+
+.photo-browser-nav {
+  color: var(--foreground, #4d5257);
+}
+
+.photo-browser-nav:disabled {
+  opacity: 0.35;
+}

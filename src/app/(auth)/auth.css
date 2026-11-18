@@ -1,0 +1,379 @@
+/* Login + verification, matched to f7_lazy_cleaner auth styles. */
+
+.login-page .content-panel {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  padding: 0;
+}
+
+.login-page .content {
+  display: flex;
+  height: 100vh;
+  height: 100dvh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: white;
+}
+
+.login-page .login-logo-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-page .logo-circle {
+  display: flex;
+  width: min(260px, 72vw);
+  max-height: 38vh;
+  aspect-ratio: 1;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  border-radius: 50%;
+}
+
+.login-page .logo-circle img {
+  width: 68%;
+  height: auto;
+}
+
+.login-page .login-form-container {
+  width: 100%;
+  max-width: 320px;
+}
+
+.login-page .phone-input-row {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin: 0 20px;
+}
+
+.login-page .country-select-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.login-page .country-select {
+  display: flex;
+  height: 44px;
+  width: 108px;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+  border: 1px solid #c6ccd2;
+  border-radius: 8px;
+  padding: 0 10px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.login-page .country-select--open,
+.login-page .country-select:focus-visible {
+  border-color: #0091b2;
+  box-shadow: 0 0 0 3px rgba(0, 145, 178, 0.12);
+  outline: none;
+}
+
+.login-page .country-select-flag {
+  width: 24px;
+  height: 16px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 1px;
+}
+
+.login-page .country-select-dial {
+  flex: 1;
+  text-align: left;
+  color: #333;
+  font-size: var(--type-auth-ui-size);
+  font-weight: 400;
+  line-height: var(--type-auth-ui-leading);
+}
+
+.login-page .country-select-chevron {
+  display: block;
+  flex-shrink: 0;
+  color: #797979;
+  transition: transform 0.15s ease;
+}
+
+.login-page .country-select-chevron--open {
+  transform: rotate(180deg);
+}
+
+.login-page .country-dropdown {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  margin: 0;
+  list-style: none;
+  border-radius: 8px;
+  border: 1px solid #eef0f3;
+  background: #fff;
+  padding: 4px;
+  box-shadow: 0 8px 24px rgba(16, 40, 48, 0.12);
+}
+
+.login-page .country-dropdown-option {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  padding: 8px 6px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.login-page .country-dropdown-option--active{
+  background: #e7f7fb;
+}
+
+.login-page .country-dropdown-flag {
+  width: 24px;
+  height: 16px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 1px;
+}
+
+.login-page .country-dropdown-dial {
+  flex: 1;
+  min-width: 0;
+  color: #333;
+  font-size: var(--type-auth-ui-size);
+  font-weight: 400;
+  line-height: var(--type-auth-ui-leading);
+}
+
+.login-page .country-dropdown-check {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.login-page .phone-input-field {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  border: 1px solid #c6ccd2;
+  border-radius: 8px;
+  padding: 0 12px;
+  outline: none;
+  font-size: var(--type-auth-ui-size);
+  font-weight: 400;
+  line-height: var(--type-auth-ui-leading);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.login-page .phone-input-field:focus {
+  border-color: #0091b2;
+  box-shadow: 0 0 0 3px rgba(0, 145, 178, 0.12);
+}
+
+.login-page .phone-input-field::placeholder {
+  color: #999;
+}
+
+.login-page .login-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-page .login-button {
+  width: 50%;
+  margin: 40px 20px 0;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background: #01d3ea;
+  padding: 12px;
+  color: white;
+  font-size: var(--type-auth-ui-size);
+  font-weight: 500;
+  line-height: var(--type-auth-ui-leading);
+  letter-spacing: 0;
+}
+
+.login-page .login-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.login-page .contact-lazy {
+  margin-top: 40px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0;
+  color: #999;
+  font-size: var(--type-auth-meta-size);
+  font-weight: 400;
+  line-height: var(--type-auth-meta-leading);
+  letter-spacing: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.verification-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: #212429;
+}
+
+.verification-page .verification-container {
+  display: flex;
+  min-height: 100vh;
+  min-height: 100dvh;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+  color: white;
+}
+
+.verification-page .verification-header {
+  margin-top: 120px;
+  font-size: var(--type-auth-display-size);
+  font-weight: 500;
+  line-height: var(--type-auth-display-leading);
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.verification-page .phone-number {
+  margin-top: 40px;
+  font-size: var(--type-auth-display-size);
+  font-weight: 500;
+  line-height: var(--type-auth-display-leading);
+  letter-spacing: 0;
+}
+
+.verification-page .verification-prompt {
+  margin-top: 80px;
+  color: white;
+  font-size: var(--type-auth-ui-size);
+  font-weight: 300;
+  line-height: var(--type-auth-ui-leading);
+  letter-spacing: 0;
+}
+
+.verification-page .verification-input-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.verification-page .verification-input {
+  width: 35px;
+  height: 45px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  background: white;
+  color: #000;
+  font-size: var(--type-auth-code-size);
+  font-weight: 400;
+  line-height: var(--type-auth-code-leading);
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.verification-page .verification-input:focus {
+  border-color: white;
+  outline: none;
+}
+
+.verification-page .resend-button {
+  width: 90%;
+  max-width: 340px;
+  margin-top: 50px;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  background: #e5e5e5;
+  padding: 12px;
+  color: #666;
+  font-size: var(--type-auth-meta-size);
+  font-weight: 700;
+  line-height: var(--type-auth-meta-leading);
+  letter-spacing: 0;
+}
+
+.verification-page .resend-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.verification-page .resend-button:not(:disabled) {
+  background: #01d3ea;
+  color: white;
+}
+
+.verification-page .help-text {
+  margin-top: 15px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: var(--type-auth-help-size);
+  font-weight: 400;
+  line-height: var(--type-auth-help-leading);
+  letter-spacing: 0;
+}
+
+.verification-page .help-link {
+  color: rgb(27, 124, 188);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.auth-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 50;
+  max-width: min(280px, calc(100vw - 48px));
+  transform: translate(-50%, -50%);
+  border: 1px solid #01d3ea;
+  border-radius: 12px;
+  background: #fff;
+  padding: 14px 20px;
+  color: #4d5257;
+  font-size: var(--type-auth-meta-size, 14px);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0;
+  text-align: center;
+  cursor: pointer;
+  animation: auth-toast-in 0.22s ease-out;
+  box-shadow: 0 10px 28px rgba(16, 40, 48, 0.12);
+}
+
+.auth-toast--light {
+  border-color: #01d3ea;
+}
+
+.auth-toast--dark {
+  border-color: #01d3ea;
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(1, 211, 234, 0.15);
+}
+
+@keyframes auth-toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 6px));
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}

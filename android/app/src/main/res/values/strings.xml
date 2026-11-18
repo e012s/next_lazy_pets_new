@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Lazy Pets 專家</string>
+    <string name="title_activity_main">Lazy Pets 專家</string>
+    <string name="package_name">com.lazypets.expert</string>
+    <string name="custom_url_scheme">com.lazypets.expert</string>
+</resources>

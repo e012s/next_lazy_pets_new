@@ -1,0 +1,43 @@
+@font-face {
+  font-family: 'Framework7 Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/Framework7Icons-Regular.woff2') format('woff2'),
+    url('/fonts/Framework7Icons-Regular.woff') format('woff'),
+    url('/fonts/Framework7Icons-Regular.ttf') format('truetype');
+}
+
+.f7-icons,
+.framework7-icons {
+  font-family: 'Framework7 Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-feature-settings: 'liga';
+  -moz-font-feature-settings: 'liga=1';
+  -moz-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+  text-align: center;
+}
+
+/* App size helpers (Tailwind size-* on <i className="f7-icons size-3">) */
+.f7-icons.size-3,
+.framework7-icons.size-3 { font-size: 12px; }
+.f7-icons.size-4,
+.framework7-icons.size-4 { font-size: 16px; }
+.f7-icons.size-5,
+.framework7-icons.size-5 { font-size: 20px; }
+.f7-icons.size-6,
+.framework7-icons.size-6 { font-size: 24px; }
+.f7-icons.size-\[22px\],
+.framework7-icons.size-\[22px\] { font-size: 22px; }
