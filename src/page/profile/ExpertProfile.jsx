@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { iconSrc } from "@/icons/sources";
+import { clientLogout } from "@/lib/api/authClient";
 import {
   primeSessionCache,
   useRefreshSession,
@@ -9,7 +10,6 @@ import {
 } from "@/context/SessionContext";
 import { accountFor } from "@/service/mock/accounts";
 import { loadRegisteredCategories } from "@/service/catalog/expertCategories";
-import { clearAuthStorage } from "@/lib/preferences";
 import { navigate } from "@/lib/navigation";
 import { ApplySummaryChip } from "@/components/apply/applyUi";
 import appConfig from "../../../appconfig.json";
@@ -183,15 +183,7 @@ export default function ExpertProfile() {
   async function logout() {
     if (loggingOut) return;
     setLoggingOut(true);
-    try {
-      await fetch("/api/auth/logout", {
-        method: "POST",
-        credentials: "same-origin",
-      });
-    } catch {
-      /* still clear client state */
-    }
-    clearAuthStorage();
+    await clientLogout();
     primeSessionCache({ authenticated: false });
     navigate("/login", "replace");
   }

@@ -1,4 +1,6 @@
 import proxyApi from "@/lib/api/Axios";
+import { isCapacitorApp } from "@/lib/api/capacitorApp";
+import { normalizePathname } from "@/lib/pathname";
 import { loadLocale } from "@/lib/preferences";
 
 export const PROFILE_ENDPOINT = "retrieve_third_party_user_profile";
@@ -7,7 +9,7 @@ export const HOME = "/";
 export const PUBLIC_AUTH_PATHS = new Set(["/login", "/verification"]);
 
 export function isPublicAuthPath(pathname) {
-  return PUBLIC_AUTH_PATHS.has(pathname);
+  return PUBLIC_AUTH_PATHS.has(normalizePathname(pathname));
 }
 
 const SKILL_TO_ROLE = { 1: "repair", 2: "pet" };
@@ -158,6 +160,9 @@ export async function readClientSession() {
 }
 
 export async function markClientRegistered() {
+  if (isCapacitorApp()) {
+    return readClientSession();
+  }
   try {
     const locale = encodeURIComponent(loadLocale());
     const res = await fetch(`/api/auth/register?locale=${locale}`, {

@@ -5,7 +5,16 @@ const extraDevOrigins =
     .map((origin) => origin.trim())
     .filter(Boolean) ?? [];
 
+const capacitorStaticExport = process.env.CAPACITOR_STATIC_EXPORT === "1";
+
 const nextConfig: NextConfig = {
+  ...(capacitorStaticExport
+    ? {
+        output: "export",
+        images: { unoptimized: true },
+        trailingSlash: true,
+      }
+    : {}),
   experimental: {
     agentUpgrade: "security",
   },
@@ -36,4 +45,6 @@ export default nextConfig;
 
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 
-initOpenNextCloudflareForDev();
+if (!capacitorStaticExport) {
+  initOpenNextCloudflareForDev();
+}

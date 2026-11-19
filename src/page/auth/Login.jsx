@@ -2,12 +2,12 @@
 import { iconSrc } from "@/icons/sources";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
 import useAuthenticate from "@/actions/Authenticate";
 import { navigate } from "@/lib/navigation";
 import { useSession } from "@/context/SessionContext";
 import { AuthToast } from "@/components/AuthToast";
 import { FullPageLoadingGate } from "@/components/FullPageLoadingGate";
+import { useAppPathname } from "@/hooks/useAppPathname";
 import { ensureMinLoadingMs } from "@/hooks/useMinimumLoading";
 import { thirdPartyLoginForm } from "@/lib/thirdPartyLoginForm";
 
@@ -19,7 +19,7 @@ const HK = {
 };
 
 export default function Login() {
-  const pathname = usePathname();
+  const pathname = useAppPathname();
   const session = useSession();
   const { login } = useAuthenticate();
   const [phoneNumber, setPhoneNumber] = useState("");

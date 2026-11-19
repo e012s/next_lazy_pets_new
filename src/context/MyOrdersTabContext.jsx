@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useLayoutEffect, useMemo, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useAppPathname } from "@/hooks/useAppPathname";
 
 export const MY_ORDER_TABS = [
   { id: "today", label: "今日" },
@@ -13,7 +13,7 @@ const MyOrdersTabContext = createContext(null);
 
 /** Keeps 今日/即將/已完成 tab while navigating between /orders and /orders/[id]. */
 export function MyOrdersTabProvider({ children }) {
-  const pathname = usePathname();
+  const pathname = useAppPathname();
   const [tab, setTab] = useState("today");
   const [doneMonth, setDoneMonth] = useState(null);
   const [doneServiceFilter, setDoneServiceFilter] = useState("all");

@@ -1,6 +1,7 @@
 "use client";
 
 import api, { workspaceApi } from "@/lib/api/Axios.jsx";
+import { persistWorkspaceTokenFromVerify } from "@/lib/api/authClient";
 import {
   isLocalLoginMode,
   localLoginSendCode,
@@ -72,7 +73,9 @@ export function useAuthenticate() {
     }
     try {
       const res = await api.post("third_party_login_verify_code", form);
-      return res.data;
+      const data = res.data;
+      persistWorkspaceTokenFromVerify(data);
+      return data;
     } catch (err) {
       const message = err?.response?.data?.message;
       return message ? { status: false, message } : { status: false };

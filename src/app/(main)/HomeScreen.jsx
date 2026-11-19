@@ -15,8 +15,8 @@ import {
   homeUpcomingTotal,
 } from "@/service/mock/home";
 import { navigate } from "@/lib/navigation";
-import { clearAuthStorage } from "@/lib/preferences";
 import { primeSessionCache } from "@/context/SessionContext";
+import { clientLogout } from "@/lib/api/authClient";
 import { BottomNav } from "@/components/BottomNav";
 
 const NEARBY_NEW_TASKS = 12;
@@ -393,10 +393,7 @@ export default function HomeScreen() {
           navigate("/apply/role");
         }}
         onLogout={async () => {
-          await fetch("/api/auth/logout", { method: "POST", credentials: "same-origin" }).catch(
-            () => {},
-          );
-          clearAuthStorage();
+          await clientLogout();
           primeSessionCache({ authenticated: false });
           setRegisterOpen(false);
           navigate("/login", "replace");

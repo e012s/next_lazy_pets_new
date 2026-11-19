@@ -8,10 +8,12 @@ import {
   useMemo,
   useState,
 } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { App } from "@capacitor/app";
 import { Capacitor } from "@capacitor/core";
+import { useAppPathname } from "@/hooks/useAppPathname";
 import { clearAuthStorage } from "@/lib/preferences";
+import { readAppPathname } from "@/lib/pathname";
 import { isPublicAuthPath } from "@/service/auth/profile";
 
 const SessionContext = createContext(null);
@@ -73,10 +75,6 @@ export function loadSession({ force = false } = {}) {
   return fetchSessionJson();
 }
 
-function currentPathname() {
-  return typeof window === "undefined" ? "" : window.location.pathname;
-}
-
 function addNativeResumeListener(onResume) {
   if (!Capacitor.isNativePlatform()) return () => {};
   let handle = null;
@@ -96,7 +94,7 @@ function addNativeResumeListener(onResume) {
 }
 
 export function SessionProvider({ children }) {
-  const pathname = usePathname();
+  const pathname = useAppPathname();
   const router = useRouter();
   const [session, setSession] = useState(sessionCache);
 
@@ -138,9 +136,9 @@ export function SessionProvider({ children }) {
   useEffect(() => {
     function onResume() {
       if (document.visibilityState !== "visible") return;
-      if (isPublicAuthPath(currentPathname())) return;
+      if (isPublicAuthPath(readAppPathname())) return;
       loadSession().then((data) => {
-        if (!data || data.authenticated || isPublicAuthPath(currentPathname())) return;
+        if (!data || data.authenticated || isPublicAuthPath(readAppPathname())) return;
         expireSession();
       });
     }

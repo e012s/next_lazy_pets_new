@@ -1,3 +1,5 @@
+import { normalizePathname } from "@/lib/pathname";
+
 /** Side drawer links (flat list). */
 export const sideMenuLinks = [
   { href: "/", label: "主頁", id: "home", exactPaths: ["/"] },
@@ -9,10 +11,12 @@ export const sideMenuLinks = [
 ];
 
 export function menuScore(pathname, href, options = {}) {
-  if (options.exactPaths?.includes(pathname)) return 1000;
+  const path = normalizePathname(pathname);
+  const base = normalizePathname(href.split("?")[0]);
+  if (options.exactPaths?.some((p) => normalizePathname(p) === path)) return 1000;
   if (href.includes("?")) return -1;
-  if (href === "/") return pathname === "/" ? 1 : -1;
-  if (pathname === href) return href.length + 1;
-  if (pathname.startsWith(`${href}/`)) return href.length;
+  if (base === "/") return path === "/" ? 1 : -1;
+  if (path === base) return base.length + 1;
+  if (path.startsWith(`${base}/`)) return base.length;
   return -1;
 }

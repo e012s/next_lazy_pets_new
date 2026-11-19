@@ -14,6 +14,8 @@ out/
 # OS
 .DS_Store
 
-# Capacitor generated web bundle copies (sources stay in capacitor-web / Next)
+.cap-build-stash/
+
+# Capacitor generated web bundle copies (sources stay in `out/` after build:cap)
 android/app/src/main/assets/public
 ios/App/App/public

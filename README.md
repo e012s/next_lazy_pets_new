@@ -33,21 +33,16 @@ npm run dev
 
 ## iOS / Android (Capacitor)
 
-Native UI uses Capacitor; pages and `/api` load from **Next** (dev or deployed). Copy `.env.example` → `.env.local` and set `CAPACITOR_SERVER_URL` (LAN IP for device dev, or `https://…` after Cloudflare deploy). `npx cap sync` reads `.env.local` automatically.
-
-**开发（真机连本机 Next）** — 先开一个终端跑 `npm run dev`，再：
+App 内嵌 `out/` 静态页，API 直连 workspace（与 f7 工程相同），**不需要**配置远程 WebView 地址。
 
 ```bash
-npm run build
-npx cap sync
+npm run build:cap
 npx cap open ios
 # 或
 npx cap open android
 ```
 
-**线上（App 连已部署的 Next）** — 把 `.env.local` 里的 `CAPACITOR_SERVER_URL` 改成 HTTPS 域名，再跑上面四条（无需本机 `dev`）。
-
-改过 `CAPACITOR_SERVER_URL` 后务必重新 `npx cap sync`。
+浏览器开发仍用 `npm run dev`（走本机 `/api` BFF）。Workers 部署仍用 `npm run build:cf`。
 
 ## Cloudflare Workers (Next + OpenNext)
 
@@ -63,8 +58,6 @@ npx cap open android
 `npm run build` 只做 `next build`，不会产生 `.open-next/`。若 Deploy 报 **`Could not find compiled Open Next config`**，把 Build 改成 **`npm run build:cf`**。
 
 Worker 名须与 `wrangler.jsonc` 的 `name` / `WORKER_SELF_REFERENCE.service` 一致（当前：`next-lazy-pets-new`）。
-
-线上地址写入 `.env.local` 的 `CAPACITOR_SERVER_URL` 后 `npx cap sync`。
 
 Open [http://127.0.0.1:4317/login](http://127.0.0.1:4317/login). A visit to `/` with no session is sent to login. The header menu reaches every screen once the expert is signed in and registered. Pet and repair chips also jump between the two find-task lists.
 

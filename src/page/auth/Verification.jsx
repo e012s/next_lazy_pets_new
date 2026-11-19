@@ -149,7 +149,15 @@ export default function Verification({ phone = "", usePhonePrefix = false }) {
             </button>
             <div className="help-text">
                 如未能收到驗證碼，請重新
-                <a className="help-link" href="/login" onClick={() => clearAuthStorage()}>
+                <a
+                  className="help-link"
+                  href="/login/"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    clearAuthStorage();
+                    navigate("/login", "replace");
+                  }}
+                >
                     輸入電話號碼
                 </a>
             </div>

@@ -1,6 +1,8 @@
 import proxyApi from "@/lib/api/Axios";
+import appConfig from "../../../appconfig.json";
+import { isCapacitorApp } from "@/lib/api/capacitorApp";
 import { validateDob } from "@/lib/format";
-import { loadLocale } from "@/lib/preferences";
+import { loadLocale, loadToken } from "@/lib/preferences";
 
 /* ── Skills catalogue API (`retrieve_third_party_skills`) ── */
 
@@ -328,7 +330,8 @@ export function assertRepairApplyForm(session, form, serviceGroups) {
 
 /* ── Submit (`apply_third_parties`) ── */
 
-const APPLY_ENDPOINT = "/api/apply_third_parties";
+const APPLY_BFF = "/api/apply_third_parties";
+const APPLY_WORKSPACE = `${appConfig.apiBaseUrl.replace(/\/$/, "")}/apply_third_parties`;
 
 function appendServiceAreas(formData, regionCodes) {
   for (const code of regionCodes ?? []) {
@@ -501,10 +504,17 @@ async function submitApplyFormData(appendFields) {
   }
 
   const locale = encodeURIComponent(loadLocale());
+  const native = isCapacitorApp();
+  const url = `${(native ? APPLY_WORKSPACE : APPLY_BFF)}?locale=${locale}`;
   try {
-    const res = await fetch(`${APPLY_ENDPOINT}?locale=${locale}`, {
+    const token = native ? await loadToken() : null;
+    if (native && !token) {
+      return { status: false, message: "未登入" };
+    }
+    const res = await fetch(url, {
       method: "POST",
-      credentials: "same-origin",
+      credentials: native ? "omit" : "same-origin",
+      headers: native ? { token } : undefined,
       body: formData,
     });
     const json = await res.json();
