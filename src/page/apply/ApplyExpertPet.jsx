@@ -38,8 +38,7 @@ const PET_FORM = {
 export default function ApplyExpertPet() {
   const {
     session,
-    globalReady,
-    ready,
+    pageLoading,
     skillsError,
     catalog,
     regionOptions,
@@ -58,7 +57,7 @@ export default function ApplyExpertPet() {
   const boardingLicenseInputRef = useRef(null);
   const dobFieldRef = useRef(null);
 
-  if (!globalReady || !ready || !form || !catalog) {
+  if (pageLoading) {
     return (
       <InPageLoading
         label="載入寵物技能…"

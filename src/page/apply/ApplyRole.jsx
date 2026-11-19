@@ -3,47 +3,34 @@ import { iconSrc } from "@/icons/sources";
 import { useEffect, useMemo, useState } from "react";
 import { useRefreshSession, useSession } from "@/context/SessionContext";
 import { useThirdPartyGlobal } from "@/context/ThirdPartyGlobalContext";
-import { InPageLoading } from "@/components/Loading";
 import { navigate } from "@/lib/navigation";
-import { fetchThirdPartySkills } from "@/service/apply/applyApi";
 import { applyRoleChoicesFromSkills, applyRoleChoicesWithApplication } from "@/service/apply/applyStatus";
 const EMPTY_HINT = "暫無可申請的服務類別。";
 
 export default function ApplyRole() {
   const session = useSession();
   const refreshSession = useRefreshSession();
-  const { global } = useThirdPartyGlobal();
-  const [catalog, setCatalog] = useState(null);
-  const [fetchError, setFetchError] = useState(null);
+  const { global, error: globalError } = useThirdPartyGlobal();
 
   useEffect(() => {
     refreshSession();
   }, [refreshSession]);
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const result = await fetchThirdPartySkills();
-      if (cancelled) return;
-      if (result?.status && Array.isArray(result.data?.services)) {
-        setCatalog(result.data.services);
-        setFetchError(null);
-      } else {
-        setCatalog([]);
-        setFetchError(result?.message?.trim() || "載入服務類別失敗");
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const catalog = useMemo(() => {
+    const skills = global?.skills;
+    return Array.isArray(skills) ? skills : [];
+  }, [global]);
 
   const choices = useMemo(() => {
-    const all = catalog ? applyRoleChoicesFromSkills(catalog, global) : [];
-    return applyRoleChoicesWithApplication(all, session?.profile);
+    if (!global) return [];
+    return applyRoleChoicesWithApplication(
+      applyRoleChoicesFromSkills(catalog, global),
+      session?.profile,
+    );
   }, [catalog, global, session?.profile]);
 
-  const emptyMessage = fetchError || EMPTY_HINT;
+  const emptyMessage =
+    globalError?.trim() || EMPTY_HINT;
 
   const [role, setRole] = useState("");
 
@@ -56,16 +43,6 @@ export default function ApplyRole() {
     () => choices.find((choice) => choice.id === activeRole),
     [choices, activeRole],
   );
-
-  if (catalog === null) {
-    return (
-      <InPageLoading
-        label="載入服務類別…"
-        minHeight={false}
-        className="min-h-[50vh] px-[15px] pt-[101px]"
-      />
-    );
-  }
 
   if (choices.length === 0) {
     return (

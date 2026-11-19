@@ -44,8 +44,7 @@ const REPAIR_FORM = {
 export default function ApplyExpertRepair() {
   const {
     session,
-    globalReady,
-    ready,
+    pageLoading,
     skillsError,
     catalog: serviceGroups,
     regionOptions,
@@ -65,7 +64,7 @@ export default function ApplyExpertRepair() {
   const profilePhotoInputRef = useRef(null);
   const dobFieldRef = useRef(null);
 
-  if (!globalReady || !ready || !form) {
+  if (pageLoading) {
     return (
       <InPageLoading
         label="載入維修技能…"

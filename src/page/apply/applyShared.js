@@ -193,11 +193,15 @@ export function useApplyForm(config) {
     }
   }
 
+  const pageLoading =
+    !globalReady || !ready || !form || !isCatalogReady(catalog);
+
   return {
     session,
     global,
     globalReady,
     ready,
+    pageLoading,
     skillsError,
     catalog,
     regionOptions,

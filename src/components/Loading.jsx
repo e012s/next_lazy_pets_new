@@ -1,3 +1,6 @@
+"use client";
+
+import { MIN_LOADING_MS, useMinimumLoading } from "@/hooks/useMinimumLoading";
 
 const LOGO_SRC = "/images/lazy-company-logo.png";
 
@@ -22,7 +25,6 @@ const markSizes = {
   },
 };
 
-/** Logo with brand spinner ring (center mark for loading states). */
 export function LazyLoadingMark({ size = "md", className }) {
   const s = markSizes[size] ?? markSizes.md;
   return (
@@ -48,21 +50,6 @@ export function LazyLoadingMark({ size = "md", className }) {
   );
 }
 
-/** Covers the viewport (e.g. app bootstrap, auth shell). */
-export function FullPageLoading({ label = "載入中…", className }) {
-  return (
-    <div
-      className={`lazy-loading-backdrop fixed inset-0 z-[100] flex flex-col items-center justify-center px-6${className}`}
-      aria-busy="true"
-      aria-live="polite"
-    >
-      <LazyLoadingMark size="lg" />
-      {label ? <p className="lazy-loading-label mt-5 text-sm leading-5 text-muted">{label}</p> : null}
-    </div>
-  );
-}
-
-/** Centered block inside a page or Screen content area. */
 export function InPageLoading({
   label = "載入中…",
   className,
@@ -71,12 +58,53 @@ export function InPageLoading({
 }) {
   return (
     <div
-      className={`flex flex-col items-center justify-center px-4 py-10${minHeight ? " min-h-[min(40vh,320px)]" : ""} ${className}`}
+      className={`flex flex-col items-center justify-center px-4 py-10${minHeight ? " min-h-[min(40vh,320px)]" : ""} ${className ?? ""}`}
       aria-busy="true"
       aria-live="polite"
     >
       <LazyLoadingMark size={size} />
-      {label ? <p className="lazy-loading-label mt-4 text-sm leading-5 text-muted">{label}</p> : null}
+      {label ? (
+        <p className="lazy-loading-label mt-4 text-sm leading-5 text-muted">{label}</p>
+      ) : null}
     </div>
   );
+}
+
+export function FullPageLoading({ label = "載入中…", className }) {
+  return (
+    <div
+      className={`lazy-loading-backdrop fixed inset-0 z-[100] flex flex-col items-center justify-center px-6${className ?? ""}`}
+      aria-busy="true"
+      aria-live="polite"
+    >
+      <LazyLoadingMark size="lg" />
+      {label ? (
+        <p className="lazy-loading-label mt-5 text-sm leading-5 text-muted">{label}</p>
+      ) : null}
+    </div>
+  );
+}
+
+/** `busy` 時顯示 InPageLoading，至少 `loadingMinMs`；結束後顯示 `children`。 */
+export function PageLoading({
+  busy = false,
+  children,
+  label = "載入中…",
+  className,
+  minHeight = true,
+  size = "md",
+  minMs = MIN_LOADING_MS,
+}) {
+  const show = useMinimumLoading(busy, minMs);
+  if (show) {
+    return (
+      <InPageLoading
+        label={label}
+        className={className}
+        minHeight={minHeight}
+        size={size}
+      />
+    );
+  }
+  return children ?? null;
 }

@@ -25,12 +25,7 @@ async function ApplyCategoryBody({ params }) {
   const { category: raw } = await params;
   if (raw !== "pet" && raw !== "repair") notFound();
   return (
-    <Screen
-      title="申請成為專家"
-      backHref="/apply/role"
-      headerClassName="h-[52px] shadow-[0_3px_6px_rgba(0,0,0,0.16)]"
-      titleClassName="min-w-0 flex-1 truncate text-[16px] leading-[23px] font-bold text-[#797979]"
-    >
+    <Screen title="申請成為專家" backHref="/apply/role">
       {raw === "repair" ? <ApplyExpertRepair /> : <ApplyExpertPet />}
     </Screen>
   );

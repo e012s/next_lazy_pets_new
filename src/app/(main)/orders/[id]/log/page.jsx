@@ -19,7 +19,7 @@ async function Body({ params }) {
     if (!assignment || assignment.kind !== "boarding")
         notFound();
     const name = petName(assignment);
-    return (<Screen title={name ? `今日日誌 · ${name}寄宿` : "今日日誌"} backHref="/orders" showMenu flat headerClassName="h-[52px] px-[15px]" titleClassName="min-w-0 flex-1 truncate text-[16px] font-bold text-[#797979]">
+    return (<Screen title={name ? `今日日誌 · ${name}寄宿` : "今日日誌"} backHref="/orders" showMenu flat>
       <OrderDailyLog id={id}/>
     </Screen>);
 }

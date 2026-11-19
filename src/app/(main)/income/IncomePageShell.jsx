@@ -10,8 +10,6 @@ export function IncomePageShell() {
       backHref="/"
       showMenu
       flat
-      headerClassName="h-[52px] px-[15px] gap-[6px]"
-      titleClassName="min-w-0 flex-1 truncate text-[16px] font-bold text-[#797979]"
       subHeader={
         <Suspense fallback={<div className="h-[46px] bg-[#4d5257]" aria-hidden />}>
           <IncomeTabBar />

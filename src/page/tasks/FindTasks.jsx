@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { InfiniteScrollSentinel } from "@/components/InfiniteScrollSentinel";
+import { PageLoading } from "@/components/Loading";
 import { usePathname } from "next/navigation";
 import { BalanceBar } from "@/components/BalanceBar";
 import { RepairJobCard } from "@/components/RepairJobCard";
@@ -137,6 +138,11 @@ export default function FindTasks({ initialTab = "all" }) {
     repairPool.serviceOpen && repairPool.page < repairPool.lastPage;
   const petHasMore = petPool.serviceOpen && petPool.page < petPool.lastPage;
 
+  const repairBoot =
+    showRepair && repairPool.items.length === 0 && repairPool.loading;
+  const petBoot = showPet && petPool.items.length === 0 && petPool.loading;
+  const initialFetchActive = repairBoot || petBoot;
+
   return (
     <div>
       <section className="bg-brand-soft p-5">
@@ -145,6 +151,12 @@ export default function FindTasks({ initialTab = "all" }) {
       </section>
       <div className="space-y-4 px-4 pb-6 pt-4">
         <RegisteredData afterRegistered="即可查看任務。">
+          <PageLoading
+            busy={initialFetchActive}
+            label="載入任務…"
+            minHeight={false}
+            className="min-h-[min(40vh,320px)]"
+          >
           {showRepair ? (
             <>
               {tab === "all" ? <h2 className="px-1 text-title font-medium">維修</h2> : null}
@@ -211,10 +223,7 @@ export default function FindTasks({ initialTab = "all" }) {
               />
             </>
           ) : null}
-          {(showRepair && repairPool.loading && repairPool.items.length === 0) ||
-          (showPet && petPool.loading && petPool.items.length === 0) ? (
-            <p className="py-10 text-center text-body text-muted">載入中…</p>
-          ) : null}
+          </PageLoading>
         </RegisteredData>
       </div>
     </div>

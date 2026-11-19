@@ -4,6 +4,10 @@ import { useRouter } from "next/navigation";
 import { useSession } from "@/context/SessionContext";
 import { navigate } from "@/lib/navigation";
 
+const DEFAULT_HEADER_CLASS = "h-[52px] gap-[6px] px-[15px]";
+const DEFAULT_TITLE_CLASS =
+  "min-w-0 flex-1 truncate text-[16px] leading-[23px] font-bold text-[#797979]";
+
 export function Screen({
   title,
   backHref,
@@ -34,7 +38,7 @@ export function Screen({
       >
         <div className="safe-top-bar" aria-hidden />
         <div
-          className={`flex items-center gap-2 ${headerClassName ?? " min-h-14 px-2"}`}
+          className={`flex items-center ${headerClassName ?? DEFAULT_HEADER_CLASS}`}
         >
           {hideBack ? null : (
             <button
@@ -52,10 +56,7 @@ export function Screen({
             </button>
           )}
           <h1
-            className={
-              titleClassName ??
-              "min-w-0 flex-1 truncate text-nav font-medium text-[#4d5257]"
-            }
+            className={titleClassName ?? DEFAULT_TITLE_CLASS}
           >
             {title}
           </h1>

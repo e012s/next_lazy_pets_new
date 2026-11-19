@@ -16,7 +16,7 @@ async function Body({ params }) {
     const assignment = getAssignment(id);
     if (!assignment)
         notFound();
-    return (<Screen title={reportScreenTitle(assignment.kind === "repair" ? assignment.title : petShortTitle(assignment))} showMenu flat headerClassName="h-[52px] px-[15px]" titleClassName="min-w-0 flex-1 truncate text-[16px] font-bold text-[#797979]">
+    return (<Screen title={reportScreenTitle(assignment.kind === "repair" ? assignment.title : petShortTitle(assignment))} showMenu flat>
       <OrderReport id={id}/>
     </Screen>);
 }
