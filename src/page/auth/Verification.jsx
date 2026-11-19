@@ -154,8 +154,9 @@ export default function Verification({ phone = "", usePhonePrefix = false }) {
                   href="/login/"
                   onClick={(event) => {
                     event.preventDefault();
-                    clearAuthStorage();
-                    navigate("/login", "replace");
+                    void clearAuthStorage().then(() =>
+                      navigate("/login", "replace"),
+                    );
                   }}
                 >
                     輸入電話號碼

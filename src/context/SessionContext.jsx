@@ -114,11 +114,13 @@ export function SessionProvider({ children }) {
 
   /** Dead / missing token → BFF already cleared the cookie; leave with replace (no history entry). */
   const expireSession = useCallback(() => {
-    clearAuthStorage();
-    router.replace("/login");
-  }, [router]);
+    const where = pathname || readAppPathname();
+    if (isPublicAuthPath(where)) return;
+    void clearAuthStorage().then(() => router.replace("/login"));
+  }, [router, pathname]);
 
   useEffect(() => {
+    if (!pathname) return;
     if (isPublicAuthPath(pathname)) {
       if (!sessionCache) primeSessionCache({ authenticated: false });
       return;
@@ -136,9 +138,11 @@ export function SessionProvider({ children }) {
   useEffect(() => {
     function onResume() {
       if (document.visibilityState !== "visible") return;
-      if (isPublicAuthPath(readAppPathname())) return;
+      const where = readAppPathname();
+      if (!where || isPublicAuthPath(where)) return;
       loadSession().then((data) => {
-        if (!data || data.authenticated || isPublicAuthPath(readAppPathname())) return;
+        const current = readAppPathname();
+        if (!data || data.authenticated || !current || isPublicAuthPath(current)) return;
         expireSession();
       });
     }

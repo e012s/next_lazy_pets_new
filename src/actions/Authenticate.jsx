@@ -74,7 +74,7 @@ export function useAuthenticate() {
     try {
       const res = await api.post("third_party_login_verify_code", form);
       const data = res.data;
-      persistWorkspaceTokenFromVerify(data);
+      await persistWorkspaceTokenFromVerify(data);
       return data;
     } catch (err) {
       const message = err?.response?.data?.message;

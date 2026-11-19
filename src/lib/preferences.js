@@ -1,19 +1,62 @@
+import { Capacitor } from "@capacitor/core";
 import appConfig from "../../appconfig.json";
 import { clearRegisteredCategories } from "@/service/catalog/expertCategories";
 import { clearBoundPushToken } from "@/lib/pushDeviceToken";
+import {
+  LEGACY_TOKEN_STORAGE_KEY,
+  WORKSPACE_TOKEN_KEY,
+} from "@/lib/workspaceToken";
 
-export async function loadToken() {
-  if (typeof window === "undefined") return null;
-  return window.localStorage.getItem("token");
+function isNative() {
+  return typeof window !== "undefined" && Capacitor.isNativePlatform();
 }
 
+async function preferences() {
+  const { Preferences } = await import("@capacitor/preferences");
+  return Preferences;
+}
+
+async function removeWorkspaceTokenFromPreferences() {
+  if (!isNative()) return;
+  try {
+    const Preferences = await preferences();
+    await Preferences.remove({ key: WORKSPACE_TOKEN_KEY });
+  } catch {
+    // plugin unavailable (e.g. web build in browser)
+  }
+}
+
+/**
+ * Web: always null (token stays in HttpOnly cookie via BFF).
+ * Native: `@capacitor/preferences` (`lp_workspace_token`).
+ */
+export async function loadToken() {
+  if (typeof window === "undefined" || !isNative()) return null;
+
+  const Preferences = await preferences();
+  const { value } = await Preferences.get({ key: WORKSPACE_TOKEN_KEY });
+  if (value) return value;
+
+  const legacy = window.localStorage.getItem(LEGACY_TOKEN_STORAGE_KEY);
+  if (!legacy) return null;
+
+  await Preferences.set({ key: WORKSPACE_TOKEN_KEY, value: legacy });
+  window.localStorage.removeItem(LEGACY_TOKEN_STORAGE_KEY);
+  return legacy;
+}
+
+/** Web: no-op. Native: Preferences only (never expose token to web storage). */
 export async function saveToken(token) {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined" || !isNative()) return;
+
+  const Preferences = await preferences();
   if (token == null || token === "") {
-    window.localStorage.removeItem("token");
+    await Preferences.remove({ key: WORKSPACE_TOKEN_KEY });
+    window.localStorage.removeItem(LEGACY_TOKEN_STORAGE_KEY);
     return;
   }
-  window.localStorage.setItem("token", String(token));
+  await Preferences.set({ key: WORKSPACE_TOKEN_KEY, value: String(token) });
+  window.localStorage.removeItem(LEGACY_TOKEN_STORAGE_KEY);
 }
 
 export function loadLocale() {
@@ -92,10 +135,12 @@ export async function deleteToken() {
   await deleteUser();
 }
 
-export function clearAuthStorage() {
+/** Clears native Preferences token and legacy localStorage keys. */
+export async function clearAuthStorage() {
   if (typeof window === "undefined") return;
   setGlobalPersistAllowed(false);
-  window.localStorage.removeItem("token");
+  await removeWorkspaceTokenFromPreferences();
+  window.localStorage.removeItem(LEGACY_TOKEN_STORAGE_KEY);
   window.localStorage.removeItem("user");
   deleteGlobalData();
   clearRegisteredCategories();

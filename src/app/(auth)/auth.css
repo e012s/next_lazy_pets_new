@@ -27,8 +27,8 @@
 
 .login-page .logo-circle {
   display: flex;
-  width: min(260px, 72vw);
-  max-height: 38vh;
+  width: min(150px, 72vw);
+  max-height: 35vh;
   aspect-ratio: 1;
   align-items: center;
   justify-content: center;

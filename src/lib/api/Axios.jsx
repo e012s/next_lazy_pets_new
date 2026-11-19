@@ -48,5 +48,5 @@ for (const method of [
   api[method] = (...args) => client()[method](...args);
 }
 
-/** Browser: `/api` BFF. Capacitor: workspace + `localStorage` token. */
+/** Browser: `/api` BFF. Capacitor: workspace + Preferences `lp_workspace_token`. */
 export default api;

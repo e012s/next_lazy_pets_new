@@ -1,14 +1,14 @@
 import { isCapacitorApp } from "@/lib/api/capacitorApp";
 import { clearAuthStorage, saveToken } from "@/lib/preferences";
 
-export function persistWorkspaceTokenFromVerify(result) {
+export async function persistWorkspaceTokenFromVerify(result) {
   if (!isCapacitorApp() || !result?.status) return;
   const nested =
     result?.data && typeof result.data === "object" ? result.data.token : null;
   const token =
     (typeof nested === "string" && nested) ||
     (typeof result?.token === "string" ? result.token : null);
-  if (token) void saveToken(token);
+  if (token) await saveToken(token);
 }
 
 export async function clientLogout() {
@@ -18,5 +18,5 @@ export async function clientLogout() {
       credentials: "same-origin",
     }).catch(() => {});
   }
-  clearAuthStorage();
+  await clearAuthStorage();
 }

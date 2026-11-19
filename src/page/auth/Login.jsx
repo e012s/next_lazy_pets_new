@@ -88,6 +88,7 @@ export default function Login() {
       return;
     }
     await ensureMinLoadingMs(startedAt);
+    setIsLoading(false);
     const prefixFlag = LOGIN_PHONE_USE_PREFIX_DEFAULT ? "1" : "0";
     navigate(
       `/verification?phone=${phoneNumber}&usePrefix=${prefixFlag}`,
