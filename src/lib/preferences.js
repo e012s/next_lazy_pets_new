@@ -1,5 +1,6 @@
 import appConfig from "../../appconfig.json";
 import { clearRegisteredCategories } from "@/service/catalog/expertCategories";
+import { clearBoundPushToken } from "@/lib/pushDeviceToken";
 
 export async function loadToken() {
   if (typeof window === "undefined") return null;
@@ -98,4 +99,5 @@ export function clearAuthStorage() {
   window.localStorage.removeItem("user");
   deleteGlobalData();
   clearRegisteredCategories();
+  clearBoundPushToken();
 }

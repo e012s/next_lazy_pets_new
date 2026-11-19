@@ -7,7 +7,7 @@ loadEnvConfig(process.cwd(), true);
 const serverUrl = process.env.CAPACITOR_SERVER_URL?.trim();
 
 const config: CapacitorConfig = {
-  appId: "com.lazypets.expert",
+  appId: "lazy.com.lazyrepair",
   appName: "Lazy Pets 專家",
   webDir: "capacitor-web",
   android: {

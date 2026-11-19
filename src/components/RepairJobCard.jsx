@@ -13,9 +13,11 @@ import {
   findTaskPrimaryBtn,
   findTaskRowListClass,
 } from "@/components/findTasks/FindTaskCardRow";
-export function RepairJobCard() {
-  const job = repairJob;
+/** @param {{ job?: ReturnType<typeof import("@/service/orders/mapOrderGroup").mapRepairOrderGroupToJob> }} props */
+export function RepairJobCard({ job: jobProp }) {
+  const job = jobProp ?? repairJob;
   const { openQuote } = useRepairQuote();
+  const quoted = Boolean(job.hasQuoted);
 
   return (
     <article className={findTaskCardClass}>
@@ -31,7 +33,8 @@ export function RepairJobCard() {
             </span>
           </div>
           <p className="mt-1 text-body font-normal text-muted">
-            {job.published} • {job.expires}
+            {job.published}
+            {job.expires ? ` • ${job.expires}` : ""}
           </p>
         </div>
       </div>
@@ -64,9 +67,18 @@ export function RepairJobCard() {
         <button type="button" className={findTaskOutlineBtn} onClick={() => navigate(`/repair/${job.id}`)}>
           查看訂單詳情
         </button>
-        <button type="button" className={findTaskPrimaryBtn} onClick={openQuote}>
-          接單
-        </button>
+        {quoted ? (
+          <span
+            className={`${findTaskPrimaryBtn} pointer-events-none bg-[#e8ecef] text-muted`}
+            aria-disabled="true"
+          >
+            已報價
+          </span>
+        ) : (
+          <button type="button" className={findTaskPrimaryBtn} onClick={openQuote}>
+            接單
+          </button>
+        )}
       </div>
     </article>
   );

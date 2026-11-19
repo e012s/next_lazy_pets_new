@@ -7,6 +7,7 @@ import { SessionProvider } from "@/context/SessionContext";
 import { ThirdPartyGlobalProvider } from "@/context/ThirdPartyGlobalContext";
 import { AppNavigationBridge } from "@/lib/navigation";
 import { CapacitorNativeChrome } from "@/components/CapacitorNativeChrome";
+import { PushDeviceBind } from "@/components/PushDeviceBind";
 
 export function AppProviders({ children }) {
   return (
@@ -14,6 +15,7 @@ export function AppProviders({ children }) {
       <CapacitorNativeChrome />
       <AppNavigationBridge />
       <SessionProvider>
+        <PushDeviceBind />
         <ThirdPartyGlobalProvider>
           <PhotoBrowserProvider>
             <RepairQuoteProvider>{children}</RepairQuoteProvider>
